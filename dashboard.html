@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitTrack</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<div class="main-wrapper">
+    <aside class="sidebar">
+        <div class="logo-box"><i class='bx bx-bolt-circle'></i></div>
+        <nav class="nav-links">
+            <a href="#" class="active" onclick="switchTab('main-dash', this)"><i class='bx bx-grid-alt'></i></a>
+            <a href="#" onclick="switchTab('exercise-library', this)"><i class='bx bx-book-content'></i></a>
+            <a href="profile.html"><i class='bx bx-user-circle'></i></a>
+            <a href="#" id="logout-btn"><i class='bx bx-log-out'></i></a>
+        </nav>
+    </aside>
+
+    <main class="content-area">
+        <div id="main-dash" class="tab-content">
+            <header class="main-header">
+                <div>
+                    <p class="greeting">System Status: Active</p>
+                    <h1 class="welcome-text">Performance Dashboard 🎉</h1>
+                </div>
+            </header>
+
+            <section class="stats-grid">
+                <div class="stat-card teal">
+                    <i class='bx bx-run'></i>
+                    <p class="label">Total Distance</p>
+                    <h3 class="value" id="total-dist">0.00 km</h3>
+                </div>
+                <div class="stat-card orange">
+                    <i class='bx bx-time-five'></i>
+                    <p class="label">Static Time</p>
+                    <h3 class="value" id="total-time">0s</h3>
+                </div>
+                <div class="stat-card pink">
+                    <i class='bx bx-trending-up'></i>
+                    <p class="label">Peak Weight</p>
+                    <h3 class="value" id="peak-weight">0 kg</h3>
+                </div>
+                <div class="stat-card purple">
+                    <i class='bx bx-sync'></i>
+                    <p class="label">Log Entries</p>
+                    <h3 class="value" id="update-count">0</h3>
+                </div>
+            </section>
+
+            <section class="dashboard-details">
+                <div class="card logging-section">
+                    <div class="card-header"><h2>DATA_INPUT</h2></div>
+                    
+                    <div id="prev-session-display" style="background: #f8faff; padding: 10px; border-radius: 12px; margin-bottom: 15px; font-size: 0.8rem; border: 1px dashed #d1d9e6; color: #8e74e6;">
+                        <i class='bx bx-history'></i> Last Session: <span id="prev-val" style="font-weight: bold; color: #2b3674;">No data found</span>
+                    </div>
+
+                    <form id="workout-form">
+                        <input type="text" id="exercise" placeholder="EXERCISE (e.g. Bench, Run, Plank, or Pushups)" required>
+                        
+                        <div id="lifting-inputs" class="input-row">
+                            <input type="number" id="sets" placeholder="SETS">
+                            <input type="number" id="reps" placeholder="REPS">
+                            <input type="number" id="weight" step="0.1" placeholder="WEIGHT (KG)">
+                        </div>
+
+                        <div id="endurance-inputs" class="input-row" style="display:none;">
+                            <input type="number" id="distance" step="0.1" placeholder="DISTANCE (KM)">
+                            <input type="number" id="steps" placeholder="TOTAL STEPS">
+                        </div>
+
+                        <div id="static-inputs" class="input-row" style="display:none;">
+                            <input type="number" id="duration" placeholder="TIME (SECONDS)">
+                            <input type="number" id="static-sets" placeholder="SETS">
+                        </div>
+
+                        <div id="bodyweight-inputs" class="input-row" style="display:none;">
+                            <input type="number" id="bw-sets" placeholder="SETS">
+                            <input type="number" id="bw-reps" placeholder="REPS">
+                        </div>
+
+                        <button type="submit" id="save-btn">SYNC_DATA</button>
+                    </form>
+                </div>
+                <div class="card chart-section">
+                    <div class="card-header"><h2>ANALYTICS</h2></div>
+                    <div class="chart-container"><canvas id="progressChart"></canvas></div>
+                </div>
+            </section>
+
+            <section class="card history-card">
+                <div class="card-header"><h2>RECENT_LOGS</h2></div>
+                <div id="workout-list"></div>
+            </section>
+        </div>
+
+        <div id="exercise-library" class="tab-content" style="display: none;">
+            <header class="main-header">
+                <h1 class="welcome-text">Exercise Library 📚</h1>
+            </header>
+            <div class="library-grid">
+                <div class="card lib-card">
+                    <div class="lib-tag purple">STRENGTH</div>
+                    <ul class="idea-list">
+                        <li onclick="selectIdea('Bench Press')">Bench Press <i class='bx bx-plus-circle'></i></li>
+                        <li onclick="selectIdea('Squat')">Squat <i class='bx bx-plus-circle'></i></li>
+                        <li onclick="selectIdea('Deadlift')">Deadlift <i class='bx bx-plus-circle'></i></li>
+                    </ul>
+                </div>
+                <div class="card lib-card">
+                    <div class="lib-tag teal">ENDURANCE</div>
+                    <ul class="idea-list">
+                        <li onclick="selectIdea('Running')">Running <i class='bx bx-plus-circle'></i></li>
+                        <li onclick="selectIdea('Cycling')">Cycling <i class='bx bx-plus-circle'></i></li>
+                        <li onclick="selectIdea('Swimming')">Swimming <i class='bx bx-plus-circle'></i></li>
+                    </ul>
+                </div>
+                <div class="card lib-card">
+                    <div class="lib-tag pink">HIIT / BW</div>
+                    <ul class="idea-list">
+                        <li onclick="selectIdea('Pushups')">Pushups <i class='bx bx-plus-circle'></i></li>
+                        <li onclick="selectIdea('Burpees')">Burpees <i class='bx bx-plus-circle'></i></li>
+                        <li onclick="selectIdea('Pullups')">Pullups <i class='bx bx-plus-circle'></i></li>
+                    </ul>
+                </div>
+                <div class="card lib-card">
+                    <div class="lib-tag orange">FLEX / STATIC</div>
+                    <ul class="idea-list">
+                        <li onclick="selectIdea('Plank')">Plank <i class='bx bx-plus-circle'></i></li>
+                        <li onclick="selectIdea('Yoga Flow')">Yoga Flow <i class='bx bx-plus-circle'></i></li>
+                        <li onclick="selectIdea('Wall Sit')">Wall Sit <i class='bx bx-plus-circle'></i></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <aside class="profile-panel">
+        <a href="profile.html" style="text-decoration: none; color: inherit;">
+            <div class="user-info">
+                <div class="avatar-icon"><i class='bx bxs-user-circle bx-lg'></i></div>
+                <div>
+                    <h3 id="user-display">---</h3>
+                    <p class="location">Edit Profile <i class='bx bx-chevron-right'></i></p>
+                </div>
+            </div>
+        </a>
+        <div class="vital-stats">
+            <div><strong>Cloud</strong><p>Sync</p></div>
+            <div><strong>v1.9.0</strong><p>Build</p></div>
+        </div>
+    </aside>
+</div>
+
+<script type="module" src="dashboard.js"></script>
+</body>
+</html>

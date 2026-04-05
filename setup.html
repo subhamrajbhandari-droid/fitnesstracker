@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitTrack // BIOMETRIC_SETUP</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="auth-card">
+        <div class="logo-box"><i class='bx bx-fingerprint'></i></div>
+        <h2>BIOMETRIC_SYNC</h2>
+        <p class="subtitle">COMPLETE_USER_PROFILE</p>
+
+        <form id="setup-form">
+            <div class="input-group">
+                <i class='bx bx-user'></i>
+                <input type="text" id="username" placeholder="DISPLAY_NAME" required>
+            </div>
+            <div class="input-group">
+                <i class='bx bx-phone'></i>
+                <input type="tel" id="phone" placeholder="PHONE_NUMBER" required>
+            </div>
+            <button type="submit" id="setup-btn">
+                SYNC_IDENTITY <i class='bx bx-sync'></i>
+            </button>
+        </form>
+    </div>
+
+    <script type="module">
+        import { auth, db } from "./firebase-config.js";
+        import { doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+        document.getElementById('setup-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('setup-btn');
+            const user = auth.currentUser;
+            
+            btn.innerText = "SYNCING...";
+            try {
+                await setDoc(doc(db, "users", user.uid), {
+                    username: document.getElementById('username').value,
+                    phone: document.getElementById('phone').value,
+                    email: user.email,
+                    setupComplete: true
+                });
+                window.location.href = "dashboard.html";
+            } catch (err) {
+                alert("Sync Error: " + err.message);
+                btn.innerText = "RETRY_SYNC";
+            }
+        });
+    </script>
+</body>
+</html>

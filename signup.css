@@ -1,0 +1,125 @@
+:root {
+    --bg-dark: #0f172a;
+    --glass-bg: rgba(30, 41, 59, 0.7);
+    --accent-purple: #8e74e6;
+    --accent-teal: #2dd4bf;
+    --text-main: #f1f5f9;
+    --border-color: rgba(255, 255, 255, 0.1);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', system-ui, sans-serif;
+    background: radial-gradient(circle at top right, #1e1b4b, #0f172a);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-main);
+}
+
+.login-box {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px); /* Glass effect */
+    padding: 3rem;
+    border-radius: 24px;
+    width: 100%;
+    max-width: 400px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+.logo-icon {
+    font-size: 4rem;
+    color: var(--accent-purple);
+    margin-bottom: 1rem;
+    filter: drop-shadow(0 0 15px rgba(142, 116, 230, 0.4));
+}
+
+h2 {
+    letter-spacing: 4px;
+    font-weight: 800;
+    margin: 0;
+}
+
+.subtitle {
+    font-size: 0.75rem;
+    color: var(--accent-teal);
+    letter-spacing: 2px;
+    margin-bottom: 2.5rem;
+    opacity: 0.8;
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 1.25rem;
+}
+
+.input-group i {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--accent-teal);
+    font-size: 1.2rem;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 14px 16px 14px 48px;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    color: white;
+    font-size: 0.9rem;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: var(--accent-purple);
+    background: rgba(15, 23, 42, 0.9);
+    box-shadow: 0 0 20px rgba(142, 116, 230, 0.15);
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 1rem;
+    background: linear-gradient(135deg, var(--accent-purple), #7c3aed);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(124, 58, 237, 0.4);
+}
+
+.auth-footer {
+    margin-top: 2rem;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+}
+
+.auth-footer a {
+    color: var(--accent-teal);
+    text-decoration: none;
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}
